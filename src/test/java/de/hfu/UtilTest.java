@@ -1,6 +1,7 @@
 package de.hfu;
 
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -11,38 +12,33 @@ import static org.junit.Assert.*;
 
 @RunWith(value = Parameterized.class)
 public class UtilTest {
+    private int erstesHJ, zweitesHJ, ungueltig;
 
-    private int ungueltigerMonat;
-    private int monatErstesHalbJahr;
-    private int monatZweitesHalbjahr;
-
-    public UtilTest(int ungueltigerMonat, int monatErstesHalbjahr, int monatZweitesHalbjahr) {
-        this.ungueltigerMonat = ungueltigerMonat;
-        this.monatErstesHalbJahr = monatErstesHalbjahr;
-        this.monatZweitesHalbjahr = monatZweitesHalbjahr;
+    public UtilTest(int erstesHJ, int zweitesHJ, int ungueltig) {
+        this.erstesHJ = erstesHJ;
+        this.zweitesHJ = zweitesHJ;
+        this.ungueltig = ungueltig;
     }
 
     @Parameterized.Parameters
     public static Collection<Integer[]> daten() {
-        return Arrays.asList(new Integer[][] {
-                {0, 1, 8}, {13, 3, 10}
+        return Arrays.asList(new Integer[][]{
+                {1, 11, 0}, {4, 9, 14}, {7, 12, -1}
         });
     }
 
-    @Test(expected = IllegalArgumentException.class, timeout = 1000)
-    public void testIstErstesHalbjahrException() throws Exception {
-        Util.istErstesHalbjahr(ungueltigerMonat);
+    @Test
+    public void testErstesHalbjahrMitErstem() {
+        assertTrue(Util.istErstesHalbjahr(erstesHJ));
     }
 
     @Test
-    public void testIstErstesHalbjahrTrue() throws Exception {
-        assertTrue(Util.istErstesHalbjahr(monatErstesHalbJahr));
+    public void testErsteHalbjahrMitZweitem(){
+        assertFalse(Util.istErstesHalbjahr(zweitesHJ));
     }
 
-    @Test
-    public void testIstErstesHalbjahrFalse() throws Exception {
-        assertFalse(Util.istErstesHalbjahr(monatZweitesHalbjahr));
+    @Test(expected=IllegalArgumentException.class, timeout=1000)
+    public void testFalscherMonat() {
+        Util.istErstesHalbjahr(ungueltig);
     }
-
-
 }

@@ -11,20 +11,20 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class QueueTest {
 
-    private int[] testInput1;
-    private int[] testInput2;
-    private int[] expectedResult1;
-    private int[] expectedResult2;
-    private int[] expectedResult3;
+    private int[] testQ1;
+    private int[] testQ2;
+    private int[] result1;
+    private int[] result2;
+    private int[] result3;
 
-    private Queue testQueue1;
+    private Queue testQueue;
 
-    public QueueTest(int[] testInput1, int[] testInput2, int[] expectedResult1, int[] expectedResult2, int[] expectedResult3) {
-        this.testInput1 = testInput1;
-        this.testInput2 = testInput2;
-        this.expectedResult1 = expectedResult1;
-        this.expectedResult2 = expectedResult2;
-        this.expectedResult3 = expectedResult3;
+    public QueueTest(int[] testQ1, int[] testQ2, int[] result1, int[] result2, int[] expectedResult3) {
+        this.testQ1 = testQ1;
+        this.testQ2 = testQ2;
+        this.result1 = result1;
+        this.result2 = result2;
+        this.result3 = expectedResult3;
     }
 
     @Parameterized.Parameters
@@ -35,49 +35,49 @@ public class QueueTest {
     }
 
     @Before
-    public void createQueues() throws Exception {
-        testQueue1 = new Queue(testInput1.length);
+    public void createQueue() throws Exception {
+        testQueue = new Queue(testQ1.length);
     }
 
     @Test(expected = IllegalArgumentException.class, timeout = 1000)
-    public void testQueueEmpty() throws Exception {
+    public void testEmptyQueue() throws Exception {
         Queue q = new Queue(0);
     }
 
     @Test
     public void testQueue() throws Exception {
-        Assert.assertArrayEquals(new int[testInput1.length], testQueue1.queue);
+        Assert.assertArrayEquals(new int[testQ1.length], testQueue.queue);
     }
 
     @Test
     public void testEnqueue() throws Exception {
-        for (int i = 0; i < testInput1.length; i++) {
-            testQueue1.enqueue(testInput1[i]);
+        for (int v : testQ1) {
+            testQueue.enqueue(v);
         }
-        Assert.assertArrayEquals(expectedResult1, testQueue1.queue);
+        Assert.assertArrayEquals(result1, testQueue.queue);
     }
 
     @Test
-    public void testEnqueueWithFullQueue() throws Exception {
-        Queue q = new Queue(testInput2.length - 1);
-        for (int i = 0; i < testInput2.length; i++) {
-            q.enqueue(testInput2[i]);
+    public void testEnqueueFullQueue() throws Exception {
+        Queue q = new Queue(testQ2.length - 1);
+        for (int v : testQ2) {
+            q.enqueue(v);
         }
-        Assert.assertArrayEquals(expectedResult2, q.queue);
+        Assert.assertArrayEquals(result2, q.queue);
     }
 
     @Test(expected = IllegalStateException.class, timeout = 1000)
-    public void testDequeueOnEmptyQueue() throws Exception {
+    public void testDequeueInEmptyQueue() throws Exception {
         Queue q = new Queue(1);
         q.dequeue();
     }
 
     @Test
     public void testDequeueReturnValue() throws Exception {
-        for (int i = 0; i < testInput1.length; i++) {
-            testQueue1.enqueue(testInput1[i]);
+        for (int v : testQ1) {
+            testQueue.enqueue(v);
         }
-        Assert.assertEquals(expectedResult3[0], testQueue1.dequeue());
+        Assert.assertEquals(result3[0], testQueue.dequeue());
     }
 
 } 

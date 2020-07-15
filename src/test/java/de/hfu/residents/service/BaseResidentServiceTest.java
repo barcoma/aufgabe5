@@ -39,9 +39,9 @@ public class BaseResidentServiceTest {
     @Parameterized.Parameters
     public static Collection daten() {
         return Arrays.asList(new String[][][] {
-            {{"max", "mustermann", "musterstraße", "musterstadt", "05-07-1995"},
-            {"anna", "musterfrau", "musterstraße", "musterstadt", "10-05-1993"},
-            {"john", "doe", "examplestreet", "examplecity", "03-11-1987"}}
+            {{"johann", "johannson", "goethestraße", "darmstadt", "12-12-1985"},
+            {"kerstin", "rau", "friedrichstraße", "köln", "10-03-1997"},
+            {"markus", "müller", "teststraße", "teststadt", "02-05-1977"}}
         });
     }
 
@@ -74,7 +74,7 @@ public class BaseResidentServiceTest {
     public void testGetUniqueResident() throws Exception {
         BaseResidentService baseResidentService = new BaseResidentService();
         baseResidentService.setResidentRepository(residentRepositoryStub);
-        Resident resident = new Resident("max", "mustermann", "musterstraße", "musterstadt", format.parse("05-07-1995"));
+        Resident resident = new Resident("johann", "johannson", "goethestraße", "darmstadt", format.parse("12-12-1985"));
         Assert.assertEquals(resident.getFamilyName(), baseResidentService.getUniqueResident(resident).getFamilyName());
     }
 
@@ -85,7 +85,7 @@ public class BaseResidentServiceTest {
     public void testGetFilteredResidentsListWithWildcard() throws Exception {
         BaseResidentService baseResidentService = new BaseResidentService();
         baseResidentService.setResidentRepository(residentRepositoryStub);
-        Resident resident = new Resident("", "mu*", "", "", null);
+        Resident resident = new Resident("", "m*", "", "", null);
         Assert.assertEquals(Arrays.asList(resident1, resident2), baseResidentService.getFilteredResidentsList(resident));
     }
 
@@ -96,7 +96,7 @@ public class BaseResidentServiceTest {
     public void testGetFilteredResidentsList() throws Exception {
         BaseResidentService baseResidentService = new BaseResidentService();
         baseResidentService.setResidentRepository(residentRepositoryStub);
-        Resident resident = new Resident("", "mustermann", "", "", null);
+        Resident resident = new Resident("", "johannson", "", "", null);
         Assert.assertEquals(Arrays.asList(resident1), baseResidentService.getFilteredResidentsList(resident));
     }
 

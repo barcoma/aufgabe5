@@ -47,9 +47,9 @@ public class BaseResidentServiceEasyMockTest {
     @Parameterized.Parameters
     public static Collection daten() {
         return Arrays.asList(new String[][][] {
-                {{"max", "mustermann", "musterstraße", "musterstadt", "05-07-1995"},
-                        {"anna", "musterfrau", "musterstraße", "musterstadt", "10-05-1993"},
-                        {"john", "doe", "examplestreet", "examplecity", "03-11-1987"}}
+                {{"johann", "johannson", "goethestraße", "darmstadt", "12-12-1985"},
+                        {"kerstin", "rau", "friedrichstraße", "köln", "10-03-1997"},
+                        {"markus", "müller", "teststraße", "teststadt", "02-05-1977"}}
         });
     }
 
@@ -78,7 +78,7 @@ public class BaseResidentServiceEasyMockTest {
      */
     @Test
     public void testGetUniqueResident() throws Exception {
-        Resident resident = new Resident("max", "mustermann", "musterstraße", "musterstadt", format.parse("05-07-1995"));
+        Resident resident = new Resident("johann", "johannson", "goethestraße", "darmstadt", format.parse("12-12-1985"));
         Assert.assertThat(resident.getFamilyName(), equalTo(baseResidentService.getUniqueResident(resident).getFamilyName()));
         verify(residentRepositoryMock);
     }
@@ -88,7 +88,7 @@ public class BaseResidentServiceEasyMockTest {
      */
     @Test
     public void testGetFilteredResidentsListWithWildcard() throws Exception {
-        Resident resident = new Resident("", "mu*", "", "", null);
+        Resident resident = new Resident("", "m*", "", "", null);
         Assert.assertThat(Arrays.asList(resident1, resident2), equalTo(baseResidentService.getFilteredResidentsList(resident)));
         verify(residentRepositoryMock);
     }
@@ -98,7 +98,7 @@ public class BaseResidentServiceEasyMockTest {
      */
     @Test
     public void testGetFilteredResidentsList() throws Exception {
-        Resident resident = new Resident("", "mustermann", "", "", null);
+        Resident resident = new Resident("", "johannson", "", "", null);
         Assert.assertThat(Arrays.asList(resident1), equalTo(baseResidentService.getFilteredResidentsList(resident)));
         verify(residentRepositoryMock);
     }
